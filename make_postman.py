@@ -19,7 +19,7 @@ def main():
         item('Pipeline — fitted metadata', 'GET', '/pipeline-info', 200, checks=[
             "pm.test('1000-entry corpus', () => pm.expect(data.corpus_size).to.eql(1000));",
             "pm.test('Saved pipeline', () => { pm.expect(data.fitted).to.eql(true); pm.expect(data.serving_refits).to.eql(false); pm.expect(data.steps.map(s => s.class)).to.eql(['ErrorTextNormalizer', 'TfidfVectorizer']); });",
-            "pm.test('Version and timestamp', () => { pm.expect(data.sklearn_version).to.eql('1.9.1'); pm.expect(Number.isNaN(Date.parse(data.build_timestamp))).to.eql(false); pm.expect(data.vocabulary_size).to.be.above(0); });"]),
+            "pm.test('Version and timestamp', () => { pm.expect(data.sklearn_version).to.eql('1.9.1'); pm.expect(Number.isNaN(Date.parse(data.built_at))).to.eql(false); pm.expect(data.built_at).to.eql(data.build_timestamp); pm.expect(data.vocabulary_size).to.be.above(0); });"]),
         item('Valid search — module missing', 'POST', '/search', 200, {'text': "ModuleNotFoundError: No module named 'requests'", 'top_k': 3}, [
             "pm.test('Three results', () => pm.expect(data.results).to.have.lengthOf(3));",
             "pm.test('Relevant first match', () => pm.expect(data.results[0].title).to.eql('Missing installed module'));"] + search_checks()),

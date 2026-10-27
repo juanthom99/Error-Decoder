@@ -14,5 +14,6 @@
   "sklearn_version": "1.9.1",
   "python_version": "3.14.7",
   "corpus_size": 1000,
-  "vocabulary_size": 32092
+  "vocabulary_size": 32092,
+  "built_at": "2026-09-15T23:52:32.157765+00:00"
 }

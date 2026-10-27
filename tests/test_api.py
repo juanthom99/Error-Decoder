@@ -47,6 +47,9 @@ def test_health_and_info():
     assert info['corpus_size'] == 1000 and info['fitted'] is True
     assert info['serving_refits'] is False
     assert info['sklearn_version'] == serve.sklearn.__version__
+    assert info['built_at'] == info['build_timestamp']
+    from datetime import datetime
+    assert datetime.fromisoformat(info['built_at']).tzinfo is not None
 
 
 @pytest.mark.parametrize('body', [

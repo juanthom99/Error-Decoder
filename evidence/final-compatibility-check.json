@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-27",
+  "backend_tests_passed": 58,
+  "postman_requests": 10,
+  "postman_assertions_passed": 25,
+  "postman_failures": 0,
+  "artifact_metadata": {
+    "schema_version": 1,
+    "steps": [
+      {
+        "name": "normalizer",
+        "class": "ErrorTextNormalizer"
+      },
+      {
+        "name": "tfidf",
+        "class": "TfidfVectorizer"
+      }
+    ],
+    "build_timestamp": "2026-09-15T23:52:32.157765+00:00",
+    "sklearn_version": "1.9.1",
+    "python_version": "3.14.7",
+    "corpus_size": 1000,
+    "vocabulary_size": 32092,
+    "built_at": "2026-09-15T23:52:32.157765+00:00"
+  },
+  "fitted_state_preserved": true,
+  "notes": "built_at uses the original fit timestamp; build_timestamp remains for compatibility. No refitting was performed. Browser verification records elsewhere retain their original scope."
+}
