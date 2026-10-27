@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@postman/pm-bin-windows-x64": "1.56.3",
+    "postman-cli": "1.56.3"
+  }
+}

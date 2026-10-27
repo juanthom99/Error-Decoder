@@ -1,0 +1,7 @@
+{
+  "frontend": "https://error-decoder-orpin.vercel.app",
+  "api": "https://juanthom99--error-decoder-api.modal.run",
+  "api_docs": "https://juanthom99--error-decoder-api.modal.run/docs",
+  "vercel_deployment": "https://vercel.com/jt-631a/error-decoder/697K34qsBDzWPfv6xJckUreYX3NQ",
+  "modal_deployment": "https://modal.com/apps/juanthom99/main/deployed/error-decoder"
+}

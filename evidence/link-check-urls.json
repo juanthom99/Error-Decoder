@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-09-16T22:58:19.827670+00:00",
+  "checks": [
+    {
+      "url": "https://juanthom99--error-decoder-api.modal.run",
+      "status": 200,
+      "final_url": "https://juanthom99--error-decoder-api.modal.run",
+      "body": {
+        "service": "Error Decoder API",
+        "hosting": "Modal",
+        "status": "ready",
+        "modal_app": "error-decoder",
+        "modal_deployment": "https://modal.com/apps/juanthom99/main/deployed/error-decoder",
+        "docs": "/docs",
+        "health": "/health",
+        "search": {
+          "method": "POST",
+          "path": "/search"
+        },
+        "frontend": "https://error-decoder-orpin.vercel.app"
+      },
+      "modal_function_call_id": "fc-01M2P72EY2HNGR2GW8YTBE8HTQ"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
+      "status": 200
+    },
+    {
+      "url": "https://fastapi.tiangolo.com/img/favicon.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js",
+      "status": 200
+    },
+    {
+      "url": "https://juanthom99--error-decoder-api.modal.run/docs",
+      "status": 200,
+      "final_url": "https://juanthom99--error-decoder-api.modal.run/docs",
+      "swagger_ui_present": true,
+      "schema_reference": true
+    },
+    {
+      "url": "https://juanthom99--error-decoder-api.modal.run/openapi.json",
+      "status": 200,
+      "final_url": "https://juanthom99--error-decoder-api.modal.run/openapi.json",
+      "paths": [
+        "/health",
+        "/pipeline-info",
+        "/search"
+      ]
+    },
+    {
+      "url": "https://error-decoder-orpin.vercel.app",
+      "status": 200,
+      "final_url": "https://error-decoder-orpin.vercel.app",
+      "javascript_status": 200,
+      "uses_expected_modal_api": true
+    }
+  ]
+}

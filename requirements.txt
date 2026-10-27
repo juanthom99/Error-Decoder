@@ -1,0 +1,10 @@
+scikit-learn==1.9.1
+numpy==2.5.3
+scipy==1.18.1
+joblib==1.6.0
+threadpoolctl==3.7.0
+narwhals==2.26.0
+fastapi==0.141.1
+pydantic==2.13.5
+starlette==1.6.0
+uvicorn==0.53.0

@@ -1,0 +1,136 @@
+{
+  "captured_at": "2026-09-16T01:23:27.809799+00:00",
+  "tool": "httpx (separate from Postman evidence)",
+  "api": "https://juanthom99--error-decoder-api.modal.run",
+  "frontend_origin": "https://error-decoder-orpin.vercel.app",
+  "preflight_status": 200,
+  "responses": [
+    {
+      "method": "GET",
+      "url": "https://juanthom99--error-decoder-api.modal.run/health",
+      "request": null,
+      "status": 200,
+      "response": {
+        "status": "ready"
+      },
+      "cors_origin": "https://error-decoder-orpin.vercel.app"
+    },
+    {
+      "method": "GET",
+      "url": "https://juanthom99--error-decoder-api.modal.run/pipeline-info",
+      "request": null,
+      "status": 200,
+      "response": {
+        "schema_version": 1,
+        "steps": [
+          {
+            "name": "normalizer",
+            "class": "ErrorTextNormalizer"
+          },
+          {
+            "name": "tfidf",
+            "class": "TfidfVectorizer"
+          }
+        ],
+        "build_timestamp": "2026-09-15T23:52:32.157765+00:00",
+        "sklearn_version": "1.9.1",
+        "python_version": "3.14.7",
+        "corpus_size": 1000,
+        "vocabulary_size": 32092,
+        "fitted": true,
+        "ranking": "cosine similarity",
+        "serving_refits": false
+      },
+      "cors_origin": "https://error-decoder-orpin.vercel.app"
+    },
+    {
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request": {
+        "text": "ModuleNotFoundError: No module named 'requests'",
+        "top_k": 3
+      },
+      "status": 200,
+      "response": {
+        "results": [
+          {
+            "id": "ED-001",
+            "title": "Missing installed module",
+            "example_error": "ModuleNotFoundError: No module named 'requests'",
+            "explanation": "The active interpreter cannot find the requested module.",
+            "likely_cause": "The package is absent from this environment, or pip installed it into another interpreter.",
+            "fix": "Activate your virtual environment and run python -m pip install requests. Check python -m pip --version points to that environment.",
+            "tags": [
+              "python"
+            ],
+            "similarity": 0.7121725984246956
+          },
+          {
+            "id": "ED-322",
+            "title": "Pickle unknown module",
+            "example_error": "pickle.load(file): ModuleNotFoundError: No module named 'old_package'",
+            "explanation": "Deserialization needs the original importable class module.",
+            "likely_cause": "The package was renamed or omitted.",
+            "fix": "Restore compatible trusted code or migrate the artifact in its original environment.",
+            "tags": [
+              "python",
+              "pickle"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.4694805807034893
+          },
+          {
+            "id": "ED-753",
+            "title": "No build isolation missing build tool",
+            "example_error": "pip --no-build-isolation: No module named setuptools",
+            "explanation": "Disabling isolation makes the current environment responsible for build tools.",
+            "likely_cause": "Required backend dependencies were not installed.",
+            "fix": "Install the declared build requirements or restore build isolation.",
+            "tags": [
+              "pip",
+              "build"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.28862574950288045
+          }
+        ],
+        "message": "Matches ranked by text similarity, not confidence."
+      },
+      "cors_origin": "https://error-decoder-orpin.vercel.app"
+    },
+    {
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request": {
+        "text": " \n\t"
+      },
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "text"
+            ],
+            "msg": "Value error, Text must contain a non-whitespace character",
+            "type": "value_error"
+          }
+        ]
+      },
+      "cors_origin": "https://error-decoder-orpin.vercel.app"
+    },
+    {
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request": {
+        "text": "zxqvblrp qqqzzzyyy"
+      },
+      "status": 200,
+      "response": {
+        "results": [],
+        "message": "No matching vocabulary. Try the error name and its message in English."
+      },
+      "cors_origin": "https://error-decoder-orpin.vercel.app"
+    }
+  ]
+}

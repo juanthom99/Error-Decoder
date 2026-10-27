@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-09-15T23:56:43.442Z",
+  "frontend": "https://error-decoder-orpin.vercel.app",
+  "api": "https://juanthom99--error-decoder-api.modal.run",
+  "postman_report": "Unmodified official Postman CLI report: evidence/postman-run.html",
+  "corpus_size": 1000,
+  "ui": "Dark glass redesign from user-provided UI mockup, retained on mobile",
+  "app_capture_method": "Playwright desktop/mobile contexts; viewport height expanded for full-page screenshots to avoid sticky-header and fixed-background clipping",
+  "tested_widths": [
+    320,
+    375,
+    390,
+    768
+  ],
+  "note": "app-simulated-503 images use an intercepted 503 response to demonstrate the unavailable state. Other app requests reach the live API.",
+  "app_captured_at": "2026-09-15T23:56:51.078353+00:00"
+}

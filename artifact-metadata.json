@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "steps": [
+    {
+      "name": "normalizer",
+      "class": "ErrorTextNormalizer"
+    },
+    {
+      "name": "tfidf",
+      "class": "TfidfVectorizer"
+    }
+  ],
+  "build_timestamp": "2026-09-15T23:52:32.157765+00:00",
+  "sklearn_version": "1.9.1",
+  "python_version": "3.14.7",
+  "corpus_size": 1000,
+  "vocabulary_size": 32092
+}

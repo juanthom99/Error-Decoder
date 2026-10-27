@@ -1,0 +1,477 @@
+{
+  "source": "postman-run.json exported by official Postman CLI 1.56.3",
+  "summary": {
+    "iterations": {
+      "executed": 1,
+      "errors": 0
+    },
+    "executedRequests": {
+      "executed": 10,
+      "errors": 0
+    },
+    "prerequestScripts": {
+      "executed": 0,
+      "errors": 0
+    },
+    "postresponseScripts": {
+      "executed": 10,
+      "errors": 0
+    },
+    "tests": {
+      "executed": 25,
+      "failed": 0,
+      "passed": 25,
+      "skipped": 0
+    },
+    "timeStats": {
+      "responseAverage": 1167.7,
+      "responseMin": 255,
+      "responseMax": 8132,
+      "responseStandardDeviation": 2323.1630614315472
+    }
+  },
+  "responses": [
+    {
+      "name": "Health \u2014 ready",
+      "method": "GET",
+      "url": "https://juanthom99--error-decoder-api.modal.run/health",
+      "request_body": null,
+      "status": 200,
+      "response_time_ms": 8132,
+      "response": {
+        "status": "ready"
+      },
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Ready",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Pipeline \u2014 fitted metadata",
+      "method": "GET",
+      "url": "https://juanthom99--error-decoder-api.modal.run/pipeline-info",
+      "request_body": null,
+      "status": 200,
+      "response_time_ms": 255,
+      "response": {
+        "schema_version": 1,
+        "steps": [
+          {
+            "name": "normalizer",
+            "class": "ErrorTextNormalizer"
+          },
+          {
+            "name": "tfidf",
+            "class": "TfidfVectorizer"
+          }
+        ],
+        "build_timestamp": "2026-09-15T23:52:32.157765+00:00",
+        "sklearn_version": "1.9.1",
+        "python_version": "3.14.7",
+        "corpus_size": 1000,
+        "vocabulary_size": 32092,
+        "fitted": true,
+        "ranking": "cosine similarity",
+        "serving_refits": false
+      },
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "1000-entry corpus",
+          "status": "passed"
+        },
+        {
+          "name": "Saved pipeline",
+          "status": "passed"
+        },
+        {
+          "name": "Version and timestamp",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Valid search \u2014 module missing",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"ModuleNotFoundError: No module named 'requests'\",\n  \"top_k\": 3\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 200,
+      "response_time_ms": 418,
+      "response": {
+        "results": [
+          {
+            "id": "ED-001",
+            "title": "Missing installed module",
+            "example_error": "ModuleNotFoundError: No module named 'requests'",
+            "explanation": "The active interpreter cannot find the requested module.",
+            "likely_cause": "The package is absent from this environment, or pip installed it into another interpreter.",
+            "fix": "Activate your virtual environment and run python -m pip install requests. Check python -m pip --version points to that environment.",
+            "tags": [
+              "python"
+            ],
+            "similarity": 0.7121725984246956
+          },
+          {
+            "id": "ED-322",
+            "title": "Pickle unknown module",
+            "example_error": "pickle.load(file): ModuleNotFoundError: No module named 'old_package'",
+            "explanation": "Deserialization needs the original importable class module.",
+            "likely_cause": "The package was renamed or omitted.",
+            "fix": "Restore compatible trusted code or migrate the artifact in its original environment.",
+            "tags": [
+              "python",
+              "pickle"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.4694805807034893
+          },
+          {
+            "id": "ED-753",
+            "title": "No build isolation missing build tool",
+            "example_error": "pip --no-build-isolation: No module named setuptools",
+            "explanation": "Disabling isolation makes the current environment responsible for build tools.",
+            "likely_cause": "Required backend dependencies were not installed.",
+            "fix": "Install the declared build requirements or restore build isolation.",
+            "tags": [
+              "pip",
+              "build"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.28862574950288045
+          }
+        ],
+        "message": "Matches ranked by text similarity, not confidence."
+      },
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Three results",
+          "status": "passed"
+        },
+        {
+          "name": "Relevant first match",
+          "status": "passed"
+        },
+        {
+          "name": "Ranked similarity scores and entry content",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Valid search \u2014 pandas",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"ValueError: The truth value of a Series is ambiguous\"\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 200,
+      "response_time_ms": 484,
+      "response": {
+        "results": [
+          {
+            "id": "ED-018",
+            "title": "Ambiguous Series truth",
+            "example_error": "ValueError: The truth value of a Series is ambiguous",
+            "explanation": "A Series contains multiple truth values and cannot be one boolean automatically.",
+            "likely_cause": "A Series was used in if, or Python and/or was used between masks.",
+            "fix": "Use .any() or .all() for a single decision. Combine elementwise masks with & or | and parenthesize each condition.",
+            "tags": [
+              "pandas"
+            ],
+            "similarity": 0.7711262554980812
+          },
+          {
+            "id": "ED-540",
+            "title": "Missing marker cannot be used as bool",
+            "example_error": "pandas bool(pd.NA): boolean value of NA is ambiguous",
+            "explanation": "An unknown value has no definite truth value.",
+            "likely_cause": "A nullable scalar reached an if statement.",
+            "fix": "Check isna first and define behavior for the missing case.",
+            "tags": [
+              "pandas",
+              "missing"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.25997072729444465
+          },
+          {
+            "id": "ED-487",
+            "title": "Repeated row label returns several rows",
+            "example_error": "pandas .loc customer returns DataFrame instead of Series",
+            "explanation": "The label is not unique.",
+            "likely_cause": "Several records share the index key.",
+            "fix": "Check index.is_unique; keep duplicates intentionally or create a unique composite key before scalar lookup.",
+            "tags": [
+              "pandas",
+              "indexing"
+            ],
+            "example_kind": "illustrative contextual diagnostic",
+            "similarity": 0.13538787921788453
+          }
+        ],
+        "message": "Matches ranked by text similarity, not confidence."
+      },
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Relevant pandas match",
+          "status": "passed"
+        },
+        {
+          "name": "Ranked similarity scores and entry content",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Unknown vocabulary \u2014 empty results",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"zxqvblrp qqqzzzyyy\"\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 200,
+      "response_time_ms": 306,
+      "response": {
+        "results": [],
+        "message": "No matching vocabulary. Try the error name and its message in English."
+      },
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "status": "passed"
+        },
+        {
+          "name": "Clear no-match result",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Invalid \u2014 blank text",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \" \\n\\t\"\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 422,
+      "response_time_ms": 451,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "text"
+            ],
+            "msg": "Value error, Text must contain a non-whitespace character",
+            "type": "value_error"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "name": "HTTP 422",
+          "status": "passed"
+        },
+        {
+          "name": "Validation details",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Invalid \u2014 extra field",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"KeyError\",\n  \"unexpected\": true\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 422,
+      "response_time_ms": 308,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "unexpected"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "type": "extra_forbidden"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "name": "HTTP 422",
+          "status": "passed"
+        },
+        {
+          "name": "Validation details",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Invalid \u2014 top_k outside range",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"KeyError\",\n  \"top_k\": 6\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 422,
+      "response_time_ms": 494,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "top_k"
+            ],
+            "msg": "Input should be less than or equal to 5",
+            "type": "less_than_equal"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "name": "HTTP 422",
+          "status": "passed"
+        },
+        {
+          "name": "Validation details",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Invalid \u2014 noninteger top_k",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"KeyError\",\n  \"top_k\": \"3\"\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 422,
+      "response_time_ms": 307,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "top_k"
+            ],
+            "msg": "Input should be a valid integer",
+            "type": "int_type"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "name": "HTTP 422",
+          "status": "passed"
+        },
+        {
+          "name": "Validation details",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "Invalid \u2014 text too long",
+      "method": "POST",
+      "url": "https://juanthom99--error-decoder-api.modal.run/search",
+      "request_body": {
+        "mode": "raw",
+        "raw": "{\n  \"text\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\n}",
+        "options": {
+          "raw": {
+            "language": "json"
+          }
+        }
+      },
+      "status": 422,
+      "response_time_ms": 522,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "text"
+            ],
+            "msg": "String should have at most 5000 characters",
+            "type": "string_too_long"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "name": "HTTP 422",
+          "status": "passed"
+        },
+        {
+          "name": "Validation details",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}
